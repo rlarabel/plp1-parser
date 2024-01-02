@@ -1,5 +1,7 @@
 package scanner;
 
+import java.util.HashMap;
+
 public class Token {
     public static final int AND         = 0; 
     public static final int ASSIGN      = 1; 
@@ -47,11 +49,70 @@ public class Token {
     public static final int SWITCH      = 43; 
     public static final int THEN        = 44; 
     public static final int TRUE        = 45;
+    public static final int EOF         = 46;
     
+    private static HashMap<String,Integer> tokenMap;
+
+    private static void initializeTokenMap() {
+        tokenMap = new HashMap<String,Integer>();
+        tokenMap.put("&",AND);
+        tokenMap.put("=",ASSIGN);
+        tokenMap.put("->",CALL);
+        tokenMap.put("class",CLASS);
+        tokenMap.put(",",COMMA);
+        tokenMap.put("//",COMMENT);
+        tokenMap.put(":",COLON);
+        tokenMap.put("create",CREATE);
+        tokenMap.put("default",DEFAULT);
+        tokenMap.put("/",DIV);
+        tokenMap.put(".",DOT);
+        tokenMap.put("else",ELSE);
+        tokenMap.put("endif",ENDIF);
+        tokenMap.put("==",EQ);
+        tokenMap.put("ERROR",ERROR);
+        tokenMap.put("false",FALSE);
+        tokenMap.put("FLOATNUM",FLOATNUM);
+        tokenMap.put("function",FUNCTION);
+        tokenMap.put(">",GT);
+        tokenMap.put("<",GE);
+        tokenMap.put("IDENTIFIER",IDENTIFIER);
+        tokenMap.put("if",IF);
+        tokenMap.put("init",INIT);
+        tokenMap.put("INTNUM",INTNUM);
+        tokenMap.put("lambda",LAMBDA);
+        tokenMap.put("{}",LB);
+        tokenMap.put("[]",LBK);
+        tokenMap.put("<=",LE);
+        tokenMap.put("let",LET);
+        tokenMap.put("<",LT);
+        tokenMap.put("(",LP);
+        tokenMap.put("method",METHOD);
+        tokenMap.put("-",MINUS);
+        tokenMap.put("*",MULT);
+        tokenMap.put("!=",NE);
+        tokenMap.put("!",NOT);
+        tokenMap.put("null",NULL);
+        tokenMap.put("|",OR);
+        tokenMap.put("+",PLUS);
+        tokenMap.put("}",RB);
+        tokenMap.put("]",RBK);
+        tokenMap.put(")",RP);
+        tokenMap.put("STRING",STRING);
+        tokenMap.put("switch",SWITCH);
+        tokenMap.put("then",THEN);
+        tokenMap.put("true",TRUE);
+    }
+
+    public static int getTokenValue(String lexeme)  {
+        if (tokenMap == null)
+            initializeTokenMap();
+        return tokenMap.get(lexeme);
+    }
+
     private int value;
     private String lexeme;
     
-    public Token() {}
+    public Token() { }
 
     public Token addValue(int value) {
         this.value = value;

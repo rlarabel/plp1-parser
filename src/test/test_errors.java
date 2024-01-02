@@ -2,38 +2,36 @@ package test;
 
 import org.junit.Test;
 
-import scanner.PLp1Scanner;
-import scanner.Token;
-
+import parser.PLp1Parser;
 import static org.junit.Assert.assertEquals;
 
 
 public class test_errors {
-    private PLp1Scanner scanner = new PLp1Scanner();
+    private PLp1Parser parser = new PLp1Parser();
 
     @Test
     public void err1Test() {
-        assertEquals(scanner.addInput("91abc3").getNextToken().getValue(), Token.ERROR);
+        assertEquals(parser.addInput("2+").parse(),"");
     }
 
     @Test
     public void err2Test() {
-        assertEquals(scanner.addInput("_abc").getNextToken().getValue(), Token.ERROR);
+        assertEquals(parser.addInput("*3").parse(),"");
     }
 
     @Test
     public void err3Test() {
-        assertEquals(scanner.addInput("$").getNextToken().getValue(), Token.ERROR);
+        assertEquals(parser.addInput("function f() { 1 }").parse(),"");
     }
 
     @Test
     public void err4Test() {
-        assertEquals(scanner.addInput("^cd").getNextToken().getValue(), Token.ERROR);
+        assertEquals(parser.addInput("function f() { 1 }").parse(),"");
     }
 
     @Test
     public void err5Test() {
-        assertEquals(scanner.addInput("ab#").getNextToken().getValue(), Token.ERROR);
+        assertEquals(parser.addInput("function f() { 1 }").parse(),"");
     }
 
 }
