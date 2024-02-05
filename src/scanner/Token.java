@@ -23,7 +23,7 @@ public class Token {
     public static final int FUNCTION    = 17; 
     public static final int GT          = 18; 
     public static final int GE          = 19; 
-    public static final int IDENTIFIER  = 20; 
+    public static final int ID          = 20; 
     public static final int IF          = 21; 
     public static final int INIT        = 22; 
     public static final int INTNUM      = 23; 
@@ -75,7 +75,7 @@ public class Token {
         tokenMap.put("function",FUNCTION);
         tokenMap.put(">",GT);
         tokenMap.put("<",GE);
-        tokenMap.put("IDENTIFIER",IDENTIFIER);
+        tokenMap.put("IDENTIFIER",ID);
         tokenMap.put("if",IF);
         tokenMap.put("init",INIT);
         tokenMap.put("INTNUM",INTNUM);

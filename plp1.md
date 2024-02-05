@@ -46,19 +46,19 @@ program.
 	\langle \mathbf{ASSIGN} \rangle & \rightarrow & \texttt{=}\\
 	\langle \mathbf{COMMA} \rangle & \rightarrow & \texttt{,}\\
 	\langle \mathbf{COLON} \rangle & \rightarrow & \texttt{:}\\
-	\langle \mathbf{DIVIDE} \rangle & \rightarrow & \texttt{/}\\
+	\langle \mathbf{DIV} \rangle & \rightarrow & \texttt{/}\\
 	\langle \mathbf{DOT} \rangle & \rightarrow & \texttt{.}\\
-	\langle \mathbf{EQUAL} \rangle & \rightarrow & \texttt{==}\\
+	\langle \mathbf{EQ} \rangle & \rightarrow & \texttt{==}\\
 	\langle \mathbf{GT} \rangle & \rightarrow & \texttt{>}\\
 	\langle \mathbf{GE} \rangle & \rightarrow & \texttt{>=}\\
-	\langle \mathbf{INVOKE} \rangle & \rightarrow & \texttt{->}\\
+	\langle \mathbf{CALL} \rangle & \rightarrow & \texttt{->}\\
 	\langle \mathbf{LB} \rangle & \rightarrow & \texttt{\{}\\
 	\langle \mathbf{LBK} \rangle & \rightarrow & \texttt{[}\\
 	\langle \mathbf{LT} \rangle & \rightarrow & \texttt{<}\\
 	\langle \mathbf{LE} \rangle & \rightarrow & \texttt{<=}\\
 	\langle \mathbf{LP} \rangle & \rightarrow & \texttt{(}\\
 	\langle \mathbf{MINUS} \rangle & \rightarrow & \texttt{-}\\
-	\langle \mathbf{MULTIPLY} \rangle & \rightarrow & \texttt{*}\\
+	\langle \mathbf{MULT} \rangle & \rightarrow & \texttt{*}\\
 	\langle \mathbf{NOT} \rangle & \rightarrow & \texttt{!}\\
 	\langle \mathbf{NE} \rangle & \rightarrow & \texttt{!=}\\
 	\langle \mathbf{OR} \rangle & \rightarrow & \texttt{|}\\
@@ -100,77 +100,46 @@ The following grammar describes the context-free syntax of PLp1:
 
 $\begin{array}{ l c l}
  & & \\
-\mathbf{program} & \rightarrow &  ( \; \mathbf{functionDef}\\
-								 & \mid & \; \; \mathbf{classDef} \\
-								 & \mid & \; \; \mathbf{expression} \; )^+\\
+\mathbf{program} & \rightarrow &  ( \; \mathbf{functionDef} \; \mid \; \mathbf{expression} \; )^+\\
  & & \\
-\mathbf{functionDef} & \rightarrow &  \langle \mathbf{FUNCTION} \rangle \; \langle \mathbf{ID} \rangle \; \langle \mathbf{LP} \rangle \; \mathbf{paramList} \; \langle \mathbf{RP} \rangle\\ 
- & & \langle \mathbf{LB} \rangle \;\mathbf{expressionList} \; \langle \mathbf{RB} \rangle \\	
+\mathbf{functionDef} & \rightarrow &  \langle \mathbf{FUNCTION} \rangle \; \langle \mathbf{ID} \rangle \;  \mathbf{paramList} \; \mathbf{expressionList}\\	
  & & \\
- \mathbf{paramList}& \rightarrow & ( \; \langle \mathbf{ID} \rangle \; ( \; \langle \mathbf{COMMA} \rangle \; \langle \mathbf{ID} \rangle \; )^* \; )?\\
+ \mathbf{paramList}& \rightarrow & \langle \mathbf{LP} \rangle \;( \; \langle \mathbf{ID} \rangle \; ( \; \langle \mathbf{COMMA} \rangle \; \langle \mathbf{ID} \rangle \; )^* \; )?\; \langle \mathbf{RP} \rangle\\
  & & \\
- \mathbf{classDef} & \rightarrow & \langle \mathbf{CLASS} \rangle	\; \langle \mathbf{ID} \rangle \; \langle \mathbf{LB} \rangle \;   \mathbf{variables} \; \mathbf{init} \; \mathbf{methods} \; \langle \mathbf{RB} \rangle		\\		
+ \mathbf{expressionList} & \rightarrow & \langle \mathbf{LB} \rangle \;( \;  \mathbf{expression} \ )^+ \; \langle \mathbf{RB} \rangle\\
  & & \\
- \mathbf{variables}	& \rightarrow & ( \;\langle \; \mathbf{ID} \; \rangle \;)^*\\
-  & & \\
- \mathbf{init} & \rightarrow & \langle \mathbf{INIT} \rangle \; \langle \mathbf{LP} \rangle \; \mathbf{paramList} \; \langle \mathbf{RP} \rangle \;  \langle \mathbf{LB} \rangle \; \mathbf{expressionList} \; \langle \mathbf{RB} \rangle\\
- & & \\
- \mathbf{methods} & \rightarrow & ( \; \mathbf{method} \; )^*\\
-  & & \\
- \mathbf{method} & \rightarrow & \langle \mathbf{METHOD} \rangle \; \langle \mathbf{ID} \rangle \; \langle \mathbf{LP} \rangle \; \mathbf{paramList} \; \langle \mathbf{RP} \rangle \;  \langle \mathbf{LB} \rangle \; \mathbf{expressionList} \; \langle \mathbf{RB} \rangle\\
- & & \\
- \mathbf{expressionList} & \rightarrow & ( \;  \mathbf{expression} \ )^+ \\
- & & \\
- \mathbf{expression}& \rightarrow &  \mathbf{expression} \; \langle \mathbf{MULTIPLY} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{DIVIDE} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{PLUS} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{MINUS} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{EQUAL} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{NOTEQUAL} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{LESS} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{LESSEQUAL} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{GREATER} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{GREATEREQUAL} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{OR} \rangle \; \mathbf{expression} \\
- & \mid & \mathbf{expression} \; \langle \mathbf{AND} \rangle \; \mathbf{expression} \\
- & \mid &\langle \mathbf{NOT} \rangle \; \mathbf{expression} \\
- & \mid & \ \mathbf{varRef}\; \mid \; \mathbf{constantExp}  
- \; \mid \; \mathbf{createExpr} \; \mid \; \mathbf{ifExpr}\\
- &  \mid  &   \mathbf{lambdaExpr}  \; \mid \;  \mathbf{assignment}  
- \; \mid \;  \mathbf{switchExpr}  \\ 
- & \mid &  \mathbf{letExpr}  \; \mid \; \langle \mathbf{LP} \rangle \;  \mathbf{expression}  \; \langle \mathbf{RP} \rangle\\
- & \mid & \mathbf{expression} \; \langle \mathbf{INVOKE} \rangle \; \langle \mathbf{LP} \rangle \; \mathbf{argumentList}  \; \langle \mathbf{RP} \rangle\\
+  \mathbf{expression}& \rightarrow &  \langle \mathbf{LP} \rangle \; \langle \mathbf{MULT} \rangle \; \mathbf{expression} \; \mathbf{expression} \; \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{DIV} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{PLUS} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{MINUS} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{EQ} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{NE} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{LT} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{LE} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{GT} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{GE} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{OR} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{AND} \rangle \; \mathbf{expression}  \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid &\langle \mathbf{LP} \rangle \;\langle \mathbf{NOT} \rangle \; \mathbf{expression} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{IF} \rangle \; \mathbf{expression} \; \langle \mathbf{THEN} \rangle \; \mathbf{expression} \; \langle \mathbf{ELSE} \rangle \; \mathbf{expression} \; \langle \mathbf{ENDIF} \rangle \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{ASSIGN} \rangle \; \langle \mathbf{ID} \rangle \;  \mathbf{expression}  \; \langle \mathbf{RP} \rangle\\
+& \mid & \langle \mathbf{LP} \rangle \; \langle \mathbf{LAMBDA} \rangle \; \mathbf{paramList} \;  \mathbf{expressionList}  \; \langle \mathbf{RP} \rangle\\
+ & \mid &  \langle \mathbf{LP} \rangle \;\langle \mathbf{SWITCH} \rangle \; \langle \mathbf{LB} \rangle \; \mathbf{switchCases} \; \langle \mathbf{RB} \rangle\; \langle \mathbf{RP} \rangle\\
+ & \mid & \langle \mathbf{LP} \rangle \;\langle \mathbf{LET} \rangle \; \langle \mathbf{LP} \rangle \;  \mathbf{letDecls}  \; \langle \mathbf{RP} \rangle  \; \mathbf{expressionList} \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{LP} \rangle \; \langle \mathbf{CALL} \rangle \;\mathbf{expression} \;  \mathbf{argumentList}  \; \langle \mathbf{RP} \rangle\\
+  & \mid & \langle \mathbf{ID} \rangle\\
+  & \mid &\; \mathbf{constantExp}  
  \end{array}$
 
 $\begin{array}{ l c l}
- \mathbf{varRef} & \rightarrow &  \langle \mathbf{ID} \rangle \; ( \; \langle  \mathbf{DOT} \rangle \; \langle \mathbf{ID} \rangle \;)? \\
-  & & \\
- \mathbf{constantExp}\ & \rightarrow & \langle \mathbf{INTUM} \rangle \; \mid \; \langle \mathbf{FLOATNUM} \rangle \; \mid \;  \mathbf{listExp} \; \mid \; \langle \mathbf{STRING} \rangle \\
- & \mid & \langle \mathbf{TRUE} \rangle \; \mid \; \langle \mathbf{FALSE} \rangle \; \mid \; \langle \mathbf{NULL} \rangle\\
+ \mathbf{constantExp}\ & \rightarrow & \langle \mathbf{INTUM} \rangle \; \mid \; \langle \mathbf{FLOATNUM} \rangle \; \mid \; \langle \mathbf{STRING} \rangle \\
+ & \mid & \langle \mathbf{TRUE} \rangle \; \mid \; \langle \mathbf{FALSE} \rangle \; \mid \; \langle \mathbf{NULL} \rangle\; \mid \;  \mathbf{listExp} \\
  & & \\
  \mathbf{listExp}  & \rightarrow & \langle \mathbf{LBK} \rangle \;  ( \; \mathbf{constantExp} \; ( \; \langle \mathbf{COMMA} \rangle \;  \mathbf{constantExp} \; )^* \;)? \;\langle \mathbf{RBK} \rangle \\
  & & \\
- \mathbf{createExpr} & \rightarrow & \langle \mathbf{CREATE} \rangle \; \langle \mathbf{ID} \rangle \\
+ \mathbf{letDecls} & \rightarrow & ( \; \langle \mathbf{LBK} \rangle \; \langle \mathbf{ID} \rangle \; \mathbf{expression} \; \langle \mathbf{RBK} \rangle \;)^*\\ 
  & & \\
- \mathbf{ifExpr} & \rightarrow & \langle \mathbf{IF} \rangle \; \mathbf{expression} \; \langle \mathbf{THEN} \rangle \; \mathbf{expression} \; \langle \mathbf{ELSE} \rangle \; \mathbf{expression} \; \langle \mathbf{ENDIF} \rangle \\
+ \mathbf{argumentList}& \rightarrow & \langle \mathbf{LP} \rangle \;( \; \mathbf{expression} \; ( \; \langle \mathbf{COMMA} \rangle \; \mathbf{expression} \; )^* \; )? \; \langle \mathbf{RP} \rangle\\
  & & \\
- \mathbf{lambdaExpr} & \rightarrow & \langle \mathbf{LAMBDA} \rangle \; \langle \mathbf{LP} \; \rangle \; \mathbf{paramList} \; \langle \; \mathbf{RP} \rangle \; \langle \mathbf{LB} \rangle \; \mathbf{expressionList} \; \langle \mathbf{RB} \rangle \\
- & & \\
- \mathbf{assignment} & \rightarrow & \langle \mathbf{ID} \rangle \; \langle \mathbf{ASSIGN} \rangle \;  \mathbf{expression}  \\
- & & \\
- \mathbf{switchExpr} & \rightarrow &  \langle \mathbf{SWITCH} \rangle \; \langle \mathbf{LB} \rangle \; \mathbf{switchCases} \; \mathbf{defaultCase} \; \langle \mathbf{RB} \rangle\\
- & & \\
- \mathbf{switchCases} & \rightarrow & ( \;  \mathbf{switchCase} \;  \;)^+\\ 
- & & \\
- \mathbf{switchCase} & \rightarrow & \langle \mathbf{CASE} \rangle \; \mathbf{expression} \;  \langle \mathbf{COLON} \rangle \; \mathbf{expressionList} \\
- & & \\
- \mathbf{defaultCase} & \rightarrow & \langle \mathbf{DEFAULT} \rangle \;  \langle \mathbf{COLON} \rangle \; \mathbf{expressionList} \\
- & & \\
- \mathbf{letExpr} & \rightarrow & \langle \mathbf{LET} \rangle \; \langle \mathbf{LP} \rangle \;  \mathbf{letDecls}  \; \langle \mathbf{RP} \rangle \; \langle \mathbf{LB} \rangle \; \mathbf{expressionList} \; \langle \mathbf{RB} \rangle \\
- & & \\
- \mathbf{letDecls} & \rightarrow & ( \;  \mathbf{letDecl} \;  \;)^*\\ 
- & & \\
- \mathbf{letDecl} & \rightarrow & \langle \mathbf{LBK} \rangle \; \langle \mathbf{ID} \rangle \; \mathbf{expression} \; \langle \mathbf{RBK} \rangle \\
- & & \\
- \mathbf{argumentList}& \rightarrow & ( \; \mathbf{expression} \; ( \; \langle \mathbf{COMMA} \rangle \; \mathbf{expression} \; )^* \; )?\\
+ \mathbf{switchCases}& \rightarrow & ( \; \langle \mathbf{LBK} \rangle \;\mathbf{expression} \; \mathbf{expression} \; \langle \mathbf{RBK} \rangle \; )^+\\
 \end{array}$
