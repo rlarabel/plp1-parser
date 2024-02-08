@@ -21,7 +21,7 @@ unit: all
 
 test_%: all
 	echo "Running test" $@
-	java -cp plp1.jar:../lib/junit4.jar org.junit.runner.JUnitCore test.$@
+	java -cp plp1.jar:lib/junit4.jar:lib/hamcrest2.jar org.junit.runner.JUnitCore test.$@
 
 clean:
 	echo "Cleaning up class files and jar file"
