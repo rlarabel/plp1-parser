@@ -20,9 +20,18 @@ public class PLp1Parser {
 		String input = String.join(" ", args);
 		PLp1Parser parser = (new PLp1Parser()).addInput(input);
 		System.out.println("Rules: "+parser.parse());
+	}
 
-}
 
+	/**
+	 * Match the next token in input. If token is required and does not match, ParseError is thrown. If the token is
+	 * not required, the token is unput. 
+	 * 
+	 * @param tokenValue the value of the token to be matched
+	 * @param required the token value must match if this is true
+	 * @return return true if the token in matched to the next input token, othewise false
+	 * @throws ParseError
+	 */
 	private boolean match(int tokenValue, boolean required) throws ParseError {
 		Token token = scanner.getNextToken();
 		boolean retValue = token.getValue() == tokenValue;
