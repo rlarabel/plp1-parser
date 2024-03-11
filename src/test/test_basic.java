@@ -82,7 +82,8 @@ public class test_basic {
                     "expression -> constantExp\n" + //
                     "constantExp -> <INTNUM>\n" + //
                     "expression -> constantExp\n" + //
-                    "listExp -> <LBK> ( constantExp (<COMMA> constantExp)*)? <RBK>constantExp -> listExp\n" + //
+                    "listExp -> <LBK> ( constantExp (<COMMA> constantExp)*)? <RBK>" + // 
+                    "constantExp -> listExp\n" + //
                     "expression -> constantExp\n" + //
                     "argumentList -> <LP> (expression (<COMMA> expression)*)? <RP>\n" + //
                     "expression -> <LP> <CALL> expression argumentList <RP>\n" + //
@@ -253,7 +254,8 @@ public class test_basic {
                     "expression -> constantExp\n" + //
                     "constantExp -> <INTNUM>\n" + //
                     "expression -> constantExp\n" + //
-                    "switchCases -> (<LBK> expression expression <RBK>)+expression -> <LP> <SWITCH> switchCases <RP>\n" + //
+                    "switchCases -> (<LBK> expression expression <RBK>)+\n" + //
+                    "expression -> <LP> <SWITCH> <LB> switchCases <RB> <RP>\n" + //
                     "program -> (functionDef | expression)+").replaceAll("\\s",""));
     }
 

@@ -170,7 +170,7 @@ public class test_adv {
                     "argumentList -> <LP> (expression (<COMMA> expression)*)? <RP>\n" + //
                     "expression -> <LP> <CALL> expression argumentList <RP>\n" + //
                     "switchCases -> (<LBK> expression expression <RBK>)+\n" +
-                    "expression -> <LP> <SWITCH> switchCases <RP>\n" + //
+                    "expression -> <LP> <SWITCH> <LB> switchCases <RB> <RP>\n" + // Added <LB> and <RB> like in readme 
                     "expressionList -> <LB> (expression)+ <RB>\n" + //
                     "functionDef -> <FUNCTION> <ID> paramList expressionList\n" + //
                     "expression -> <ID>\n" + //
@@ -188,7 +188,8 @@ public class test_adv {
                     "expression -> constantExp\n" + //
                     "constantExp -> <INTNUM>\n" + //
                     "expression -> constantExp\n" + //
-                    "listExp -> <LBK> ( constantExp (<COMMA> constantExp)*)? <RBK>constantExp -> listExp\n" + //
+                    "listExp -> <LBK> ( constantExp (<COMMA> constantExp)*)? <RBK>" + //
+                    "constantExp -> listExp\n" + //
                     "expression -> constantExp\n" + //
                     "constantExp -> <INTNUM>\n" + //
                     "expression -> constantExp\n" + //
